@@ -20,7 +20,8 @@ function App() {
   const countryList = ['Current Location','Seoul','Japan','Paris','New York']
 
   const getCurrentLocation = () => {
-     Array.from(document.getElementsByClassName("drop")).forEach((item) => {
+
+     Array.from(document.getElementsByClassName("backGround"))[0].querySelectorAll("div").forEach((item) => {
           item.remove();
       });
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -32,8 +33,6 @@ function App() {
       }else{
         getCityWeather(city)
       }
-
-      console.log("get Current",weatherData)
     })
   }
 
@@ -65,10 +64,18 @@ function App() {
   useEffect(() => {
     getCurrentLocation();
       if(weather === "Rain"){
-          const background = document.querySelector('.backGround');           for (let i = 0; i < 6; i++) {
+          const background = document.querySelector('.backGround');
+          for (let i = 0; i < 6; i++) {
               const drop = document.createElement("div");
               drop.className = "drop";
               background.appendChild(drop);
+          }
+      }else{
+          const background = document.querySelector('.backGround');
+          for (let i = 0; i < 6; i++) {
+              const wind = document.createElement("div");
+              wind.className = "sunrise";
+              background.appendChild(wind);
           }
       }
   }, [city,weather]);
@@ -76,15 +83,10 @@ function App() {
 
   return (
       <div className="container">
-          <WeatherBox weatherData={weatherData}/>
+          <WeatherBox weatherData={weatherData} weather = {weather}/>
           <WeatherButton country={countryList} getWeather={onClickCountryButton}/>
           <div className={`backGround ${weather}`}>
-              <div className="drop"></div>
-              <div className="drop"></div>
-              <div className="drop"></div>
-              <div className="drop"></div>
-              <div className="drop"></div>
-              <div className="drop"></div>
+
           </div>
       </div>
   );

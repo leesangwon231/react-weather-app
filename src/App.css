@@ -24,9 +24,18 @@ html,body{
     height: 500px;
     box-shadow: 10px 10px 5px gray ;
     font-size: 20px;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
 }
+
+.weatherBox > div{
+    font-size: 40px;
+}
+
+
 
 
 .buttonArea{
@@ -62,7 +71,7 @@ html,body{
 }
 
 .Clear{
-    background-image: url("https://img.freepik.com/free-photo/photorealistic-style-clouds_23-2151058930.jpg");
+    background-image: url("https://cdn.greenpostkorea.co.kr/news/photo/201709/80440_71364_407.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -94,6 +103,7 @@ html,body{
 
 }
 
+
 .Rain {
     background-image: url("https://cdn.pixabay.com/photo/2017/08/18/13/04/glass-2654887_640.jpg");
     background-size: cover;
@@ -120,6 +130,7 @@ html,body{
     z-index: -1;
 }
 
+/*애니 메이션의 이동을 결정한다*/
 @keyframes rainDrop {
     to {
         transform: translateY(100vh);
@@ -157,3 +168,69 @@ html,body{
 }
 
 
+
+
+.sunrise {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+    animation: wind 3s infinite linear;
+    z-index: -1;
+}
+/*진행도에 따른 위치 이동효과*/
+@keyframes wind {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(25vw) translateY(-5vh);
+    }
+    50% {
+        transform: translateX(50vw) translateY(5vh);
+    }
+    75% {
+        transform: translateX(75vw) translateY(-5vh);
+    }
+    100% {
+        transform: translateX(100vw) translateY(0);
+    }
+}
+
+.sunrise:nth-child(1) {
+    top: 30%;
+    left: -20px;
+    animation-delay: 0s;
+}
+
+.sunrise:nth-child(2) {
+    top: 40%;
+    left: -20px;
+    animation-delay: 0.5s;
+}
+
+.sunrise:nth-child(3) {
+    top: 50%;
+    left: -20px;
+    animation-delay: 1s;
+}
+
+.sunrise:nth-child(4) {
+    top: 60%;
+    left: -20px;
+    animation-delay: 1.5s;
+}
+
+.sunrise:nth-child(5) {
+    top: 70%;
+    left: -20px;
+    animation-delay: 2s;
+}
+
+.sunrise:nth-child(6) {
+    top: 80%;
+    left: -20px;
+    animation-delay: 2.5s;
+}
