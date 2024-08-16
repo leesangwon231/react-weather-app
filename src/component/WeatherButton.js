@@ -1,14 +1,16 @@
 import React from 'react'
 import {Button} from "react-bootstrap";
+import ButtonElement from "./Button";
 
-const WeatherButton = () => {
+const WeatherButton = ({country, getWeather}) => {
+
+
     return (
-        <div>
-            <Button variant="secondary">Secondary</Button>{' '}
-            <Button variant="secondary">Secondary</Button>{' '}
-            <Button variant="secondary">Secondary</Button>{' '}
-            <Button variant="secondary">Secondary</Button>{' '}
-            <Button variant="secondary">Secondary</Button>{' '}
+        <div className={"buttonArea"}>
+            {country.map((data,index) => (
+                <ButtonElement key={index} data = {data} getWeather = {getWeather} />
+            ))}
+
         </div>
     )
 }

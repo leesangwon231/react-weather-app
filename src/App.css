@@ -16,3 +16,90 @@ html,body{
     height: 100%;
     flex-direction: column;
 }
+
+.weatherBox{
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 700px;
+    height: 500px;
+    box-shadow: 10px 10px 5px gray ;
+}
+
+
+.buttonArea{
+    display: flex;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+
+.buttonElement{
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    transition: all 0.2s ;
+    border: 5px solid lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.buttonElement:hover {
+    transform: scale(1.1,1.1);
+    box-shadow: 0px 5px 5px -2px rgba(0, 0, 0, 0.25);
+}
+
+.rain {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.drop {
+    position: absolute;
+    top: -100px;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #00BFFF);
+    animation: rainDrop 0.5s infinite linear;
+}
+
+@keyframes rainDrop {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.drop:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.drop:nth-child(2) {
+    left: 30%;
+    animation-delay: 0.2s;
+}
+
+.drop:nth-child(3) {
+    left: 50%;
+    animation-delay: 0.4s;
+}
+
+.drop:nth-child(4) {
+    left: 70%;
+    animation-delay: 0.1s;
+}
+
+.drop:nth-child(5) {
+    left: 90%;
+    animation-delay: 0.3s;
+}
+
+.drop:nth-child(6) {
+    left: 80%;
+    animation-delay: 0.5s;
+}

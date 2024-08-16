@@ -1,10 +1,10 @@
 import React from 'react'
 
-const WeatherBox = () => {
+const WeatherBox = ({weatherData}) => {
     return (
-        <div>
-            <div>서울</div>
-            <div>2도</div>
+        <div className={"weatherBox"}>
+            <div>{weatherData?.name}</div>
+            <div>{weatherData?.weather[0].description}</div>
         </div>
     )
 }

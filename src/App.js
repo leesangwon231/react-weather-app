@@ -15,15 +15,23 @@ import WeatherButton from "./component/WeatherButton";
 function App() {
 
   const [weatherData, setWeatherData] = useState(null);
+  const [city,setCity] = useState("");
+  const countryList = ['Current Location','Seoul','Japan','Paris','New York']
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
       let apiKey = "8ce0d86cd5c3050334ec3a1223d27aca";
-      getWeatherCurrent(lat,lon,apiKey);
+      if(city === "Current Location" || city === ""){
+        getWeatherCurrent(lat,lon,apiKey);
+      }else{
+        getCityWeather(city)
+      }
+      console.log("get Current",weatherData)
     })
   }
+
 
 
   const getWeatherCurrent = (lat,lon,apiKey) => {
@@ -33,16 +41,38 @@ function App() {
           });
   }
 
+  const getCityWeather = (city) => {
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8ce0d86cd5c3050334ec3a1223d27aca`)
+        .then((res) => {
+          setWeatherData(res.data);
+        });
+  }
+
+
+  const onClickCountryButton = (countryName) => {
+      setCity(countryName);
+  }
+
+
   useEffect(() => {
     getCurrentLocation();
+  }, [city]);
 
-  }, []);
+
 
   return (
-    <div className="container">
-        <WeatherBox/>
-        <WeatherButton/>
-    </div>
+      <div className="container">
+        <WeatherBox weatherData={weatherData}/>
+        <WeatherButton country={countryList} getWeather={onClickCountryButton}/>
+        <div className="rain">
+          <div className="drop"></div>
+          <div className="drop"></div>
+          <div className="drop"></div>
+          <div className="drop"></div>
+          <div className="drop"></div>
+          <div className="drop"></div>
+        </div>
+      </div>
   );
 }
 
