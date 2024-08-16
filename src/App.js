@@ -15,10 +15,14 @@ import WeatherButton from "./component/WeatherButton";
 function App() {
 
   const [weatherData, setWeatherData] = useState(null);
+  const [weather,setWeather] = useState("");
   const [city,setCity] = useState("");
   const countryList = ['Current Location','Seoul','Japan','Paris','New York']
 
   const getCurrentLocation = () => {
+     Array.from(document.getElementsByClassName("drop")).forEach((item) => {
+          item.remove();
+      });
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
@@ -28,6 +32,7 @@ function App() {
       }else{
         getCityWeather(city)
       }
+
       console.log("get Current",weatherData)
     })
   }
@@ -38,6 +43,7 @@ function App() {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`)
           .then((res) => {
               setWeatherData(res.data);
+              setWeather(res.data.weather[0].main);
           });
   }
 
@@ -45,6 +51,7 @@ function App() {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8ce0d86cd5c3050334ec3a1223d27aca`)
         .then((res) => {
           setWeatherData(res.data);
+          setWeather(res.data.weather[0].main);
         });
   }
 
@@ -54,24 +61,31 @@ function App() {
   }
 
 
+
   useEffect(() => {
     getCurrentLocation();
-  }, [city]);
-
+      if(weather === "Rain"){
+          const background = document.querySelector('.backGround');           for (let i = 0; i < 6; i++) {
+              const drop = document.createElement("div");
+              drop.className = "drop";
+              background.appendChild(drop);
+          }
+      }
+  }, [city,weather]);
 
 
   return (
       <div className="container">
-        <WeatherBox weatherData={weatherData}/>
-        <WeatherButton country={countryList} getWeather={onClickCountryButton}/>
-        <div className="rain">
-          <div className="drop"></div>
-          <div className="drop"></div>
-          <div className="drop"></div>
-          <div className="drop"></div>
-          <div className="drop"></div>
-          <div className="drop"></div>
-        </div>
+          <WeatherBox weatherData={weatherData}/>
+          <WeatherButton country={countryList} getWeather={onClickCountryButton}/>
+          <div className={`backGround ${weather}`}>
+              <div className="drop"></div>
+              <div className="drop"></div>
+              <div className="drop"></div>
+              <div className="drop"></div>
+              <div className="drop"></div>
+              <div className="drop"></div>
+          </div>
       </div>
   );
 }
