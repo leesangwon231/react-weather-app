@@ -37,12 +37,16 @@ function App() {
   }
 
 
-
   const getWeatherCurrent = (lat,lon,apiKey) => {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`)
           .then((res) => {
               setWeatherData(res.data);
-              setWeather(res.data.weather[0].main);
+              if(res.data.weather[0].main === "Drizzle" || res.data.weather[0].main === "Mist"){
+                  setWeather("Rain");
+              }else{
+                  setWeather(res.data.weather[0].main);
+              }
+
           });
   }
 
@@ -50,7 +54,11 @@ function App() {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8ce0d86cd5c3050334ec3a1223d27aca`)
         .then((res) => {
           setWeatherData(res.data);
-          setWeather(res.data.weather[0].main);
+            if(res.data.weather[0].main === "Drizzle" || res.data.weather[0].main === "Mist"){
+                setWeather("Rain");
+            }else{
+                setWeather(res.data.weather[0].main);
+            }
         });
   }
 
@@ -63,7 +71,7 @@ function App() {
 
   useEffect(() => {
     getCurrentLocation();
-      if(weather === "Rain"){
+      if(weather === "Rain" || weather === "Drizzle" || weather === "Mist"){
           const background = document.querySelector('.backGround');
           for (let i = 0; i < 6; i++) {
               const drop = document.createElement("div");

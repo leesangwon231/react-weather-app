@@ -1,10 +1,9 @@
 import React from 'react'
 
 const WeatherBox = ({weatherData,weather}) => {
-
     let weatherSmall = weather.toLowerCase();
-    let temp = weatherData?.main.temp;
-    let fahrenheit = (weatherData?.main.temp)* 9/5+32;
+    let temp = weatherData?.main.temp.toFixed(2);
+    let fahrenheit =((weatherData?.main.temp)* 9/5+32).toFixed(2) ;
     return (
         <div className={"weatherBox"}>
             <div className={"name"}>{weatherData?.name}</div>
