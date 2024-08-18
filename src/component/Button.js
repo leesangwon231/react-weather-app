@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ButtonElement = ({data, getWeather}) => {
+const ButtonElement = ({data, getWeather, city}) => {
   return (
-    <div className={"buttonElement"} onClick={() => getWeather(data)}>
+    <div className={`buttonElement ${data === city ? "selected" : ""}`} onClick={() => getWeather(data)}>
         {data}
     </div>
   );

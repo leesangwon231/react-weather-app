@@ -5,6 +5,8 @@ import axios from "axios";
 import WeatherBox from "./component/WeatherBox";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherButton from "./component/WeatherButton";
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 //1. 앱이 실행되자마자 현재위치기반의 날씨가 보인다
 //2. 날씨정보에는 도시,섮씨, 화씨 날시상태
@@ -13,14 +15,16 @@ import WeatherButton from "./component/WeatherButton";
 //5. 현재 버튼을 누른면 다시 현재 기반의 날씨가 나온다.
 //6. 데이터를 들고 오는 동안 로딩스피너가 돈다.
 function App() {
-
+  const [clicked , setClicked] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [weather,setWeather] = useState("");
   const [city,setCity] = useState("");
-  const countryList = ['Current Location','Seoul','Japan','Paris','New York']
+  const countryList = ['Current Location','Seoul','Japan','Paris','New York'];
+  const [loading, setLodaing] = useState(true);
+
 
   const getCurrentLocation = () => {
-
+      setLodaing(true);
      Array.from(document.getElementsByClassName("backGround"))[0].querySelectorAll("div").forEach((item) => {
           item.remove();
       });
@@ -46,7 +50,7 @@ function App() {
               }else{
                   setWeather(res.data.weather[0].main);
               }
-
+              setLodaing(false);
           });
   }
 
@@ -59,12 +63,14 @@ function App() {
             }else{
                 setWeather(res.data.weather[0].main);
             }
+            setLodaing(false);
         });
   }
 
 
-  const onClickCountryButton = (countryName) => {
+  const onClickCountryButton = (countryName,e) => {
       setCity(countryName);
+      setClicked("clicked")
   }
 
 
@@ -91,8 +97,8 @@ function App() {
 
   return (
       <div className="container">
-          <WeatherBox weatherData={weatherData} weather = {weather}/>
-          <WeatherButton country={countryList} getWeather={onClickCountryButton}/>
+          <WeatherBox weatherData={weatherData} weather = {weather} loading={loading}/>
+          <WeatherButton country={countryList} getWeather={onClickCountryButton} city={city}/>
           <div className={`backGround ${weather}`}>
 
           </div>
